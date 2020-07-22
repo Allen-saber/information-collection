@@ -1,0 +1,19 @@
+# create a new spreadsheet with name list of all the files in a certain folder
+# add file links to each files to another col
+import xlwings as xw
+import os
+import sys
+app = xw.App(visible=True,add_book=False)
+wb = app.books.add()
+pathDir = os.listdir(r'\\192.168.254.109\data_process\Allen\trial\photo')#文件放置在当前文件夹中，用来获取当前文件夹内所有文件目录
+i = 1
+for s in pathDir:
+    rng = xw.sheets['sheet1'].range(i,2)
+    wb.sheets['sheet1'].range(i,1).value = s
+    rng.add_hyperlink(r'\\192.168.254.109\data_process\Allen\trial\photo\\'+s,s)
+    i = i+1
+#item = ['No.','Defect ID','Check date','Outside/Inside','Blade status','Chordwise location','Spanwise location','Defects','Defects size','Pictures','Remarks']
+#wb.sheets['sheet1'].range('A1').value=item
+wb.save(r'\\192.168.254.109\data_process\Allen\trial\test.xlsx')
+wb.close()
+app.quit()
